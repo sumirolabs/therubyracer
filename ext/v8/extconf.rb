@@ -1,5 +1,10 @@
 require 'mkmf'
 
+# Handle issue where Bundler config does not separate arguments into multiple values
+if ARGV.length == 1 && ARGV =~ /--with.*--with/
+  ARGV = ARGV.split(' ')
+end
+
 have_library('pthread')
 have_library('objc') if RUBY_PLATFORM =~ /darwin/
 $CPPFLAGS += " -Wall" unless $CPPFLAGS.split.include? "-Wall"
